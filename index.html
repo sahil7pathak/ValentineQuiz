@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Valentine's Gauntlet ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .hidden { display: none; }
+        .bounce { animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .heart-fall { position: fixed; top: -10%; z-index: 99; animation: fall linear forwards; }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-100 to-red-100 min-h-screen flex items-center justify-center p-4 font-sans text-gray-800">
+
+    <div id="game-container" class="bg-white p-8 rounded-3xl shadow-2xl max-w-md w-full text-center border-b-8 border-pink-300 relative overflow-hidden">
+        
+        <div class="w-full bg-gray-200 rounded-full h-2 mb-6">
+            <div id="progress" class="bg-pink-500 h-2 rounded-full transition-all duration-500" style="width: 20%"></div>
+        </div>
+
+        <div id="level-1">
+            <span class="text-pink-500 font-bold uppercase tracking-widest text-xs text-opacity-70">Level 1: The Beginning</span>
+            <h2 class="text-2xl font-bold mb-2">Our Origin Story</h2>
+            <p class="mb-6 text-gray-500 text-sm italic">"Every great data set starts with a single point. For us, it was here..."</p>
+            
+            <p class="mb-2 font-semibold">Where was our very first date?</p>
+            <input type="text" id="ans-1" class="border-2 border-pink-100 rounded-xl p-3 w-full mb-3 outline-none focus:border-pink-500 text-center" placeholder="Restaurant name...">
+            
+            <div class="flex gap-2">
+                <button onclick="showHint('It definitely involved some Mexican Food! H...o\'s')" class="flex-1 bg-gray-100 text-gray-500 py-3 rounded-xl hover:bg-gray-200 transition">💡 Hint</button>
+                <button onclick="nextLevel(1, 'habanero\'s')" class="flex-[2] bg-pink-500 text-white font-bold py-3 rounded-xl hover:shadow-lg active:scale-95 transition">Unlock Level 2</button>
+            </div>
+        </div>
+
+        <div id="level-2" class="hidden">
+            <span class="text-pink-500 font-bold uppercase tracking-widest text-xs">Level 2: The Chase</span>
+            <h2 class="text-2xl font-bold mb-2">Catch My Heart</h2>
+            <p class="mb-6 text-gray-500 text-sm">"I was chasing you for a while, now it's your turn!"</p>
+            
+            <p class="mb-4 text-sm font-semibold">Taps needed: <span id="clicks-left" class="text-pink-600">7</span></p>
+            <div class="flex justify-center h-24 items-center">
+                <button id="heart-btn" onclick="catchHeart()" class="text-5xl bounce transition-all">❤️</button>
+            </div>
+            <button onclick="showHint('Don\'t let it escape! It gets bigger with every tap.')" class="mt-4 w-full bg-gray-100 text-gray-500 py-2 rounded-xl">💡 Hint</button>
+        </div>
+
+        <div id="level-3" class="hidden">
+            <span class="text-pink-500 font-bold uppercase tracking-widest text-xs">Level 3: The Logic</span>
+            <h2 class="text-2xl font-bold mb-2">The Golden Record</h2>
+            <p class="mb-6 text-gray-500 text-sm italic">"Clean the noise to find the sweetest part of this database."</p>
+            
+            <div class="bg-gray-100 p-3 rounded mb-4 font-mono text-xs break-all text-pink-400 font-bold uppercase tracking-widest">
+                #$#H#%&O#$@N#$@E#$@Y#$#
+            </div>
+            <input type="text" id="ans-3" class="border-2 border-pink-100 rounded-xl p-3 w-full mb-3 outline-none focus:border-pink-500 text-center" placeholder="What's the word?">
+            
+            <div class="flex gap-2">
+                <button onclick="showHint('It is exactly what your name means in Sanskrit.')" class="flex-1 bg-gray-100 text-gray-500 py-3 rounded-xl">💡 Hint</button>
+                <button onclick="nextLevel(3, 'honey')" class="flex-[2] bg-pink-500 text-white font-bold py-3 rounded-xl hover:shadow-lg active:scale-95 transition">Validate Data</button>
+            </div>
+        </div>
+
+        <div id="level-4" class="hidden">
+            <span class="text-pink-500 font-bold uppercase tracking-widest text-xs">Level 4: New Horizons</span>
+            <h2 class="text-2xl font-bold mb-2">Florida Bound</h2>
+            <p class="mb-6 text-gray-500 text-sm">"From the NYC skyline to the Disney Land. What are we doing first?"</p>
+            
+            <p class="mb-2 font-semibold text-sm text-pink-600">March 2026 is our month!</p>
+            <input type="text" id="ans-4" class="border-2 border-pink-100 rounded-xl p-3 w-full mb-3 outline-none focus:border-pink-500 text-center" placeholder="City name...">
+            
+            <div class="flex gap-2">
+                <button onclick="showHint('Think about the location-the city!')" class="flex-1 bg-gray-100 text-gray-500 py-3 rounded-xl">💡 Hint</button>
+                <button onclick="nextLevel(4, 'orlando')" class="flex-[2] bg-pink-500 text-white font-bold py-3 rounded-xl hover:shadow-lg active:scale-95 transition">Almost There</button>
+            </div>
+        </div>
+
+        <div id="level-5" class="hidden">
+            <span class="text-pink-500 font-bold uppercase tracking-widest text-xs">Level 5: The Decision</span>
+            <h2 class="text-2xl font-bold mb-2">The Final Query</h2>
+            <p class="mb-10 text-gray-500 text-sm">"The system requires one final confirmation to deploy the reward."</p>
+            
+            <h3 class="text-2xl font-black mb-8">Will you be my Valentine?</h3>
+            <div class="flex flex-col gap-4 items-center relative h-32">
+                <button onclick="revealPrize()" class="bg-red-500 text-white font-bold px-10 py-3 rounded-xl shadow-lg z-10 hover:scale-105 active:scale-95 transition">YES!</button>
+                <button id="no-btn" onmouseover="moveNo()" class="bg-gray-300 text-gray-600 font-bold px-10 py-3 rounded-xl absolute transition-all duration-200">NO</button>
+            </div>
+            <button onclick="showHint('Error 404: NO button not found. Try the red one!')" class="mt-8 w-full text-gray-400 text-xs">💡 Hint</button>
+        </div>
+
+        <div id="final-reveal" class="hidden animate-in fade-in zoom-in duration-700">
+    <h1 class="text-3xl font-bold text-pink-600 mb-2">Mission Accomplished!</h1>
+    <h3 class="text-xl font-medium text-gray-700 mb-4 italic text-sm">Happy Valentine's Dayyyyy, Madhura</h3>
+    
+    <div class="mb-6 px-2">
+        <img src="giftcard.jpg" alt="Valentine Surprise" class="rounded-2xl shadow-lg border-4 border-white w-full h-auto mx-auto max-w-[300px]">
+    </div>
+
+    <p class="text-gray-600 text-sm mb-6 px-4 font-medium">
+        "You've navigated my heart better than any algorithm. I can't wait for our Florida adventures."
+    </p>
+    
+    <p class="text-xs text-pink-400 font-bold uppercase tracking-widest">I Love You to the Seashore and Back!</p>
+</div>
+    </div>
+
+    <script>
+        let clickCount = 0;
+
+        function showHint(msg) {
+            alert("💡 HINT: " + msg);
+        }
+
+        function nextLevel(current, correctAns) {
+            // This line handles Case-Insensitivity (.toLowerCase) 
+            // and Keyword matching (.includes)
+            const input = document.getElementById(`ans-${current}`).value.toLowerCase().trim();
+            
+            if(input.includes(correctAns.toLowerCase())) {
+                document.getElementById(`level-${current}`).classList.add('hidden');
+                document.getElementById(`level-${current+1}`).classList.remove('hidden');
+                document.getElementById('progress').style.width = ((current + 1) * 20) + '%';
+            } else {
+                alert("Incorrect! Sahil knows you know this... try again! ❤️");
+            }
+        }
+
+        function catchHeart() {
+            clickCount++;
+            const btn = document.getElementById('heart-btn');
+            const display = document.getElementById('clicks-left');
+            display.innerText = 7 - clickCount;
+            
+            // Random movement within the card
+            btn.style.transform = `translate(${Math.random() * 120 - 50}px, ${Math.random() * 80 - 40}px) scale(${1 + clickCount * 0.1})`;
+
+            if(clickCount >= 7) {
+                document.getElementById('level-2').classList.add('hidden');
+                document.getElementById('level-3').classList.remove('hidden');
+                document.getElementById('progress').style.width = '60%';
+            }
+        }
+
+        function moveNo() {
+            const btn = document.getElementById('no-btn');
+            const x = Math.random() * 200 - 100;
+            const y = Math.random() * 150 - 75;
+            btn.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        function revealPrize() {
+            document.getElementById('level-5').classList.add('hidden');
+            document.getElementById('final-reveal').classList.remove('hidden');
+            document.getElementById('progress').style.width = '100%';
+            startConfetti();
+        }
+
+        function startConfetti() {
+            for(let i=0; i<60; i++) {
+                const h = document.createElement('div');
+                h.innerHTML = ['❤️','💖','🌸','🏜️','✨'][Math.floor(Math.random()*5)];
+                h.className = 'heart-fall';
+                h.style.left = Math.random() * 100 + 'vw';
+                h.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                h.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                document.body.appendChild(h);
+            }
+        }
+    </script>
+</body>
+</html>
